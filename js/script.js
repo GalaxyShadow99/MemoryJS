@@ -1,6 +1,7 @@
 console.log("Script JS chargé avec succès");
 
 // Liaison avec le DOM
+const startBtn = document.getElementById("start-btn");
 const board = document.getElementById("game-board");
 const movesDisplay = document.getElementById("moves");
 const timerDisplay = document.getElementById("timer");
@@ -36,7 +37,7 @@ function shuffle(array) {
 function revealCard(card) {
   const img = document.createElement("img");
   img.src = card.dataset.value;
-  img.alt = "Image de mémoire";
+  img.alt = "Memory";
   card.appendChild(img);
 }
 
@@ -72,9 +73,11 @@ function checkMatch() {
     checkVictory();
   } else {
     setTimeout(() => {
-      firstCard.innerHTML = "";
-      secondCard.innerHTML = "";
-      resetTurn();
+      if (firstCard && secondCard) {
+        firstCard.innerHTML = "";
+        secondCard.innerHTML = "";
+        resetTurn();
+      }
     }, 800);
   }
 }
@@ -88,7 +91,7 @@ function resetTurn() {
 function checkVictory() {
   if (matchedCount === cards.length) {
     stopTimer();
-    resultDisplay.textContent = `Victoire ! Coups : ${moves} | Temps : ${formatTime(seconds)}`;
+    resultDisplay.textContent = `Victoire en coups : ${moves} | Temps : ${formatTime(seconds)}`;
   }
 }
 
@@ -121,6 +124,10 @@ function formatTime(duration) { // from stackOverflow
 }
 
 function initGame() {
+  if (startBtn.parentNode !== null) {
+    startBtn.parentNode.removeChild(startBtn);
+  }
+
   board.innerHTML = "";
   resultDisplay.textContent = "";
   moves = 0;
@@ -139,9 +146,6 @@ function initGame() {
     const card = document.createElement("div");
     card.classList.add("card");
     card.setAttribute("role", "button");
-    // pas d'image affichée, OSEF on force la taille de la div pour être de 150x150 px
-    card.setAttribute("style","width:150px");
-    card.setAttribute("style","height:150px");
     card.setAttribute("tabindex", "0");
     card.dataset.value = imgUrl;
     board.appendChild(card);
@@ -154,4 +158,4 @@ function initGame() {
 }
 
 restartBtn.addEventListener("click", initGame);
-initGame();
+startBtn.addEventListener("click", initGame);

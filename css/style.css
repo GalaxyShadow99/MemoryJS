@@ -1,13 +1,17 @@
 #game-board {
   display: grid;
-  grid-template-columns: repeat(4, 150px);
-  gap: 15px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
   justify-content: center;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .card {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   background-color: #0d6efd;
   border-radius: 8px;
   display: flex;
@@ -20,4 +24,5 @@
   height: 100%;
   border-radius: 8px;
   object-fit: cover;
+  color: white;
 }
